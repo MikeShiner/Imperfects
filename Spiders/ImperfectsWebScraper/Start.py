@@ -12,7 +12,9 @@ def purgeCollection():
     db = client['imperfects']['trainers']
     collection = db['trainers']
     collection.remove()
+    print("=================================================")
     print("============= Mongo Trainers Cleared ============")
+    print("=================================================")
 
 
 reload(sys)

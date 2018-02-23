@@ -23,7 +23,13 @@ class SchuhSpider(scrapy.Spider):
     processed = 0
 
     def start_requests(self):
-        return [scrapy.Request(url=self.url, callback=self.parse, method="POST", body=json.dumps(self.payload), headers=self.headers)]
+        requests_list = []
+        for i in range(0, 50):
+            pagePayload = dict(self.payload)
+            pagePayload["hash"] = self.payload["hash"] + "page=" + str(i)
+            requests_list.append(scrapy.Request(url=self.url, callback=self.parse,
+                                                method="POST", body=json.dumps(pagePayload), headers=self.headers))
+        return requests_list
 
     def parse(self, response):
         jsonresponse = json.loads(response.body)["d"][0]
