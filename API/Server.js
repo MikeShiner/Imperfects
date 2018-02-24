@@ -43,7 +43,7 @@ class Server {
                 res.send(trainers);
             });
         });
-        this.router.use("/options", (req, res) => __awaiter(this, void 0, void 0, function* () {
+        this.router.use("/api/options", (req, res) => __awaiter(this, void 0, void 0, function* () {
             let options = {};
             options.brands = yield this.trainerModel.distinct("brand").exec();
             options.sizes = yield this.trainerModel.distinct("size").exec();

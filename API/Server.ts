@@ -38,7 +38,7 @@ export class Server {
                 });
         });
 
-        this.router.use("/options", async (req, res) => {
+        this.router.use("/api/options", async (req, res) => {
             let options: any = {};
             options.brands = await this.trainerModel.distinct("brand").exec();
             options.sizes = await this.trainerModel.distinct("size").exec();
