@@ -42,6 +42,7 @@ export class Server {
             let options: any = {};
             options.brands = await this.trainerModel.distinct("brand").exec();
             options.sizes = await this.trainerModel.distinct("size").exec();
+            options.sizes = options.sizes.sort((a: number, b: number) => { return a - b });
             res.send(options);
         });
     }

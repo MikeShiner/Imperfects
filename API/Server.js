@@ -47,6 +47,7 @@ class Server {
             let options = {};
             options.brands = yield this.trainerModel.distinct("brand").exec();
             options.sizes = yield this.trainerModel.distinct("size").exec();
+            options.sizes = options.sizes.sort((a, b) => { return a - b; });
             res.send(options);
         }));
     }
