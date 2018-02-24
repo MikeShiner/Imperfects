@@ -15,7 +15,7 @@ class OfficeSpider(scrapy.Spider):
         'https://offcutsshoes.co.uk/collections/mens/trainers?page=1'
     ]
     colours = ['Beige', 'Black', 'Blue', 'Brown', 'Burgundy', 'Cream', 'Gold', 'Green', 'Grey', 'Multi', 'Multi-Coloured', 'Natural',
-               'NavyBlue', 'Orange', 'Pink', 'Purple', 'Red', 'Silver', 'Tan', 'White', 'Yellow', 'Olive', 'Khaki', 'Light', 'Metallic', 'Sail']
+               'NavyBlue', 'Orange', 'Pink', 'Purple', 'Red', 'Silver', 'Tan', 'White', 'Yellow', 'Olive', 'Khaki', 'Light', 'Metallic', 'Sail', 'Platinum', 'Wolf']
     originalUrl = 'https://offcutsshoes.co.uk'
     processed = 0
 
@@ -32,23 +32,25 @@ class OfficeSpider(scrapy.Spider):
                     "h3.product-list-item-title > a::text").extract_first()
 
                 sizeRe = re.search(r'(Uk|UK)* Size.\d\.*\d*', fullname).group()
-                trainer["size"] = sizeRe.replace("Uk Size ", "")
+                trainer["size"] = float(sizeRe.replace(
+                    "Uk Size ", "").replace("UK Size", "").replace("Size ", ""))
                 trainer["name"] = fullname.replace(sizeRe, "").replace(
                     "Mens ", "").replace(trainer["brand"], "").replace(" - ", "")
 
                 for colour in self.colours:
                     trainer["name"] = trainer["name"].replace(
                         colour, "").strip()
-                trainer["price"] = product.css(
-                    "span.money::text").extract_first().replace("£", "")
+                trainer["price"] = float(product.css(
+                    "span.money::text").extract_first().replace("£", ""))
 
                 # Original Price is optional on some occassions
                 original_price = product.css(
                     "span.original::text").extract_first()
                 if original_price is not None:
-                    trainer["previous_price"] = original_price.replace("£", "")
+                    trainer["previous_price"] = float(
+                        original_price.replace("£", ""))
                 else:
-                    trainer["previous_price"] = 0
+                    trainer["previous_price"] = float(0)
 
                 trainer["type"] = "Trainer"
                 trainer["link"] = self.originalUrl + product.css(

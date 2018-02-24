@@ -52,8 +52,8 @@ class SchuhSpider(scrapy.Spider):
         trainer = response.meta["trainerData"]
         trainer["alt_img"] = response.xpath(
             "//div[@id='swipe']/ul//img/@src").extract()
-        trainer["size"] = response.xpath(
-            "//option[contains(@class,'sizeAvailable')]/text()").extract_first().replace("UK", "").replace(" ", "")
+        trainer["size"] = float(response.xpath(
+            "//option[contains(@class,'sizeAvailable')]/text()").extract_first().replace("UK", "").replace(" ", ""))
         self.processed += 1
         yield trainer
 
@@ -64,9 +64,9 @@ class SchuhSpider(scrapy.Spider):
         trainer["brand"] = product.css("p.brand::text").extract_first()
         trainer["name"] = product.css("p.name::text").extract_first()
         trainer["type"] = product.css("p.style::text").extract_first()
-        trainer["price"] = product.css(
-            "p.reduction::text").extract_first().replace("£", "")
-        trainer["previous_price"] = product.css(
-            "span.reductionStrike::text").extract_first().replace("was £", "")
+        trainer["price"] = float(product.css(
+            "p.reduction::text").extract_first().replace("£", ""))
+        trainer["previous_price"] = float(product.css(
+            "span.reductionStrike::text").extract_first().replace("was £", ""))
         trainer["stock_img"] = product.css("img::attr(src)").extract_first()
         return trainer
