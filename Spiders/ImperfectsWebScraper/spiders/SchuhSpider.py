@@ -11,6 +11,7 @@ from scrapy.crawler import CrawlerProcess
 from items import TrainerItem
 from scrapy.utils.project import get_project_settings
 import pickle
+import datetime
 
 
 class SchuhSpider(scrapy.Spider):
@@ -59,6 +60,8 @@ class SchuhSpider(scrapy.Spider):
 
     def getMetaInfo(self, product):
         trainer = TrainerItem()
+        trainer["shop"] = "Schuh"
+        trainer["found"] = datetime.datetime.utcnow()
         trainer["link"] = product.css("a::attr(href)").extract_first().replace(
             "//", "/").replace("http:/", "http://")
         trainer["brand"] = product.css("p.brand::text").extract_first()

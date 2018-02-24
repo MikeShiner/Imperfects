@@ -9,8 +9,7 @@ import pymongo
 
 def purgeCollection():
     client = pymongo.MongoClient('mongodb://localhost:27017')
-    db = client['imperfects']['trainers']
-    collection = db['trainers']
+    collection = client['imperfects']['trainers']
     collection.remove()
     print("=================================================")
     print("============= Mongo Trainers Cleared ============")

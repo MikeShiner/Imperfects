@@ -18,3 +18,5 @@ class TrainerItem(Item):
     stock_img = Field()
     alt_img = Field()
     size = Field()
+    found = Field()
+    shop = Field()

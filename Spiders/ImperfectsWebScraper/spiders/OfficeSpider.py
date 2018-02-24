@@ -6,6 +6,7 @@ import re
 from scrapy.http import *
 from scrapy.selector import HtmlXPathSelector, Selector
 from items import TrainerItem
+import datetime
 
 
 class OfficeSpider(scrapy.Spider):
@@ -24,7 +25,8 @@ class OfficeSpider(scrapy.Spider):
         for product in response.css('div.product-list-item'):
             try:
                 trainer = TrainerItem()
-
+                trainer["shop"] = "Office"
+                trainer["found"] = datetime.datetime.utcnow()
                 trainer["brand"] = product.css(
                     "p.product-list-item-vendor > a::text").extract_first()
 
