@@ -3,6 +3,8 @@ import http from 'http';
 import mongoose from 'mongoose';
 import { Database } from './database/Database';
 import { ITrainerModel } from './database/trainerModel';
+import cors from 'cors';
+import path from 'path';
 
 // Configurable Variables
 const port = 3000;
@@ -21,14 +23,16 @@ export class Server {
         this.registerRoutes();
         this.app.use(this.router);
         this.app.set("port", port);
+        this.app.use(cors({ origin: true }));
+        this.app.use(express.static(path.join(__dirname, 'public')));
     }
     registerRoutes() {
+
         this.router.use("/api", (req, res) => {
             let query = this.buildQueryParameters(req.query);
             let offset = req.query.page != null ?
                 (parseInt(req.query.page) * this.pageSize) - this.pageSize : 0;
 
-            console.log("Offset: ", offset);
             this.trainerModel.find(query)
                 .limit(this.pageSize)
                 .skip(offset)
@@ -45,6 +49,8 @@ export class Server {
             options.sizes = options.sizes.sort((a: number, b: number) => { return a - b });
             res.send(options);
         });
+
+        this.router.use("/", express.static('index.html'));
     }
 
     private buildQueryParameters(urlParams: any) {

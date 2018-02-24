@@ -1,0 +1,21 @@
+#filter-form p {
+    display: inline;
+    font-size: 1.2em;
+    margin-left: 10px;
+}
+
+#filter-form fieldset {
+    margin: 10px 0px;
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+#filter-form select {
+    display: block;
+    margin-left: 30px;
+    margin-top: 10px;
+}
+
+footer {
+    margin-top: 60px;
+}

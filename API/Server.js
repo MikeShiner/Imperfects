@@ -14,6 +14,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const http_1 = __importDefault(require("http"));
 const Database_1 = require("./database/Database");
+const cors_1 = __importDefault(require("cors"));
+const path_1 = __importDefault(require("path"));
 // Configurable Variables
 const port = 3000;
 const mongoUri = "mongodb://localhost:27017/imperfects";
@@ -26,13 +28,14 @@ class Server {
         this.registerRoutes();
         this.app.use(this.router);
         this.app.set("port", port);
+        this.app.use(cors_1.default({ origin: true }));
+        this.app.use(express_1.default.static(path_1.default.join(__dirname, 'public')));
     }
     registerRoutes() {
         this.router.use("/api", (req, res) => {
             let query = this.buildQueryParameters(req.query);
             let offset = req.query.page != null ?
                 (parseInt(req.query.page) * this.pageSize) - this.pageSize : 0;
-            console.log("Offset: ", offset);
             this.trainerModel.find(query)
                 .limit(this.pageSize)
                 .skip(offset)
@@ -50,6 +53,7 @@ class Server {
             options.sizes = options.sizes.sort((a, b) => { return a - b; });
             res.send(options);
         }));
+        this.router.use("/", express_1.default.static('index.html'));
     }
     buildQueryParameters(urlParams) {
         console.log(urlParams);
