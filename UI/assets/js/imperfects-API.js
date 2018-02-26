@@ -14,5 +14,29 @@ $(document).ready(function () {
         });
     };
 
+    var loadTrainers = function (page, size) {
+        var queryString = "?page=";
+        if (!page) {
+            page = 1;
+        }
+        queryString = queryString + page;
+
+        if (size) {
+            queryString = queryString + "&size=" + size;
+        }
+
+        $.get("/api" + queryString, function (data) {
+            $('#products').html(JSON.stringify(data));
+        });
+    };
+
+    var registerEventHandlers = function () {
+        $('.size-selector').change(function (e) {
+            loadTrainers(null, e.target.value);
+        });
+    }
+
     loadOptions();
+    registerEventHandlers();
+    loadTrainers(null);
 });
