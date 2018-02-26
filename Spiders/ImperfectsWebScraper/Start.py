@@ -3,7 +3,8 @@ from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
 from spiders.OfficeSpider import OfficeSpider
 from spiders.SchuhSpider import SchuhSpider
-import sys
+#from importlib import reload
+##import sys
 import pymongo
 
 
@@ -16,8 +17,8 @@ def purgeCollection():
     print("=================================================")
 
 
-reload(sys)
-sys.setdefaultencoding("utf-8")
+# reload(sys)
+# sys.setdefaultencoding("utf-8")
 
 purgeCollection()
 

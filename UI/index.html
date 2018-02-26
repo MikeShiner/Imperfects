@@ -14,7 +14,7 @@
 
 
     <!-- Bootstrap core CSS     -->
-    <link href="/UI/assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
 
     <!-- Animation library for notifications   -->
     <link href="assets/css/animate.min.css" rel="stylesheet" />
@@ -49,8 +49,8 @@
                             <i class="ti-ruler-alt"></i>
                             <p>Size</p>
                         </label>
-                        <select>
-                            <option>Pick a size</option>
+                        <select id="size-selector">
+                            <option value="">Pick a size</option>
                         </select>
                     </fieldset>
                 </form>
@@ -58,6 +58,22 @@
         </div>
 
         <div class="main-panel">
+
+            <nav class="navbar navbar-default">
+
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar bar1"></span>
+                            <span class="icon-bar bar2"></span>
+                            <span class="icon-bar bar3"></span>
+                        </button>
+                        <a class="navbar-brand" href="#">All Trainers</a>
+                    </div>
+                </div>
+            </nav>
+
             <div class="content">
                 <div class="container-fluid">
                     <div class="row">
@@ -96,6 +112,7 @@
 
 <!-- Paper Dashboard Core javascript and methods for Demo purpose -->
 <script src="assets/js/paper-dashboard.js"></script>
+<script src="assets/js/imperfects-API.js"></script>
 
 
 </html>

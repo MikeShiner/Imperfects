@@ -2,8 +2,17 @@ $(document).ready(function () {
 
 
     var loadOptions = function () {
-        $.get("localhost:3000/api", function (data) {
-            console.log(data);
+        $.get("/api/options", function (data) {
+
+            var sizeSelector = $('#size-selector');
+            var brandSelector = null;
+
+            data.sizes.forEach(function (element) {
+                option = $('<option>').attr("value", element).html(element);
+                sizeSelector.append(option);
+            });
         });
-    }
+    };
+
+    loadOptions();
 });
