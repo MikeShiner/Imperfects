@@ -24,7 +24,7 @@ export class Server {
         this.app.use(this.router);
         this.app.set("port", port);
         this.app.use(cors({ origin: true }));
-        this.app.use(express.static(path.join(__dirname, 'public')));
+        this.app.use(express.static(path.join(__dirname, '../UI')));
     }
     registerRoutes() {
 
@@ -50,7 +50,7 @@ export class Server {
             res.send(options);
         });
 
-        this.router.use("/", express.static('index.html'));
+        // this.router.use("/", express.static(__dirname + '../UI/index.html'));
     }
 
     private buildQueryParameters(urlParams: any) {
