@@ -26,7 +26,7 @@ $(document).ready(function () {
         }
 
         $.get("/api" + queryString, function (data) {
-            $('#products').html(JSON.stringify(data));
+            // $('#products').html(JSON.stringify(data));
         });
     };
 

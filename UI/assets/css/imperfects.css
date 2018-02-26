@@ -19,3 +19,21 @@
 footer {
     margin-top: 60px;
 }
+
+/* Trainer Card */
+
+.trainer {
+    min-height: 200px;
+    margin-bottom: 15px;
+}
+
+.trainer h4 {
+    text-align: center;
+}
+
+.trainer img {
+    width: 200px;
+    height: auto;
+    margin: auto;
+    display: block;
+}
