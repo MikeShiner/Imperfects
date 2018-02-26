@@ -28,7 +28,17 @@ export class Server {
     }
     registerRoutes() {
 
+        this.router.use("/api/options", async (req, res) => {
+            console.log("Options endpoint hit");
+            let options: any = {};
+            options.brands = await this.trainerModel.distinct("brand").exec();
+            options.sizes = await this.trainerModel.distinct("size").exec();
+            options.sizes = options.sizes.sort((a: number, b: number) => { return a - b });
+            res.send(options);
+        });
+
         this.router.use("/api", (req, res) => {
+            console.log("API endpoint hit");
             let query = this.buildQueryParameters(req.query);
             let offset = req.query.page != null ?
                 (parseInt(req.query.page) * this.pageSize) - this.pageSize : 0;
@@ -42,15 +52,8 @@ export class Server {
                 });
         });
 
-        this.router.use("/api/options", async (req, res) => {
-            let options: any = {};
-            options.brands = await this.trainerModel.distinct("brand").exec();
-            options.sizes = await this.trainerModel.distinct("size").exec();
-            options.sizes = options.sizes.sort((a: number, b: number) => { return a - b });
-            res.send(options);
-        });
 
-        // this.router.use("/", express.static(__dirname + '../UI/index.html'));
+        this.router.use("/", express.static(__dirname + '../UI/index.html'));
     }
 
     private buildQueryParameters(urlParams: any) {

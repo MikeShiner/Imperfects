@@ -29,10 +29,19 @@ class Server {
         this.app.use(this.router);
         this.app.set("port", port);
         this.app.use(cors_1.default({ origin: true }));
-        this.app.use(express_1.default.static(path_1.default.join(__dirname, 'public')));
+        this.app.use(express_1.default.static(path_1.default.join(__dirname, '../UI')));
     }
     registerRoutes() {
+        this.router.use("/api/options", (req, res) => __awaiter(this, void 0, void 0, function* () {
+            console.log("Options endpoint hit");
+            let options = {};
+            options.brands = yield this.trainerModel.distinct("brand").exec();
+            options.sizes = yield this.trainerModel.distinct("size").exec();
+            options.sizes = options.sizes.sort((a, b) => { return a - b; });
+            res.send(options);
+        }));
         this.router.use("/api", (req, res) => {
+            console.log("API endpoint hit");
             let query = this.buildQueryParameters(req.query);
             let offset = req.query.page != null ?
                 (parseInt(req.query.page) * this.pageSize) - this.pageSize : 0;
@@ -46,14 +55,7 @@ class Server {
                 res.send(trainers);
             });
         });
-        this.router.use("/api/options", (req, res) => __awaiter(this, void 0, void 0, function* () {
-            let options = {};
-            options.brands = yield this.trainerModel.distinct("brand").exec();
-            options.sizes = yield this.trainerModel.distinct("size").exec();
-            options.sizes = options.sizes.sort((a, b) => { return a - b; });
-            res.send(options);
-        }));
-        this.router.use("/", express_1.default.static('index.html'));
+        this.router.use("/", express_1.default.static(__dirname + '../UI/index.html'));
     }
     buildQueryParameters(urlParams) {
         console.log(urlParams);
